@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="in.moneytrack.core.DomainTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-11-12T08:42:54.559Z" hostname="local-validation" time="0.393">
+  <properties/>
+  <testcase name="unknownFailureCause" classname="in.moneytrack.core.DomainTest" time="0.069"/>
+  <testcase name="refundAlsoReducesCategory" classname="in.moneytrack.core.DomainTest" time="0.101"/>
+  <testcase name="forecastRequiresCoverage" classname="in.moneytrack.core.DomainTest" time="0.005"/>
+  <testcase name="forecastWithThreeMonthsOfCoverage" classname="in.moneytrack.core.DomainTest" time="0.051"/>
+  <testcase name="missingTimeIsNotInvented" classname="in.moneytrack.core.DomainTest" time="0.065"/>
+  <testcase name="exactMinorUnits" classname="in.moneytrack.core.DomainTest" time="0.002"/>
+  <testcase name="missingReferenceIsNotAutoMerged" classname="in.moneytrack.core.DomainTest" time="0.002"/>
+  <testcase name="creditNotAutomaticallyARefund" classname="in.moneytrack.core.DomainTest" time="0.001"/>
+  <testcase name="currencyFormatting" classname="in.moneytrack.core.DomainTest" time="0.041"/>
+  <testcase name="duplicateMessageIsIdempotent" classname="in.moneytrack.core.DomainTest" time="0.004"/>
+  <testcase name="pendingBecomesSuccessful" classname="in.moneytrack.core.DomainTest" time="0.001"/>
+  <testcase name="reversalAndCreditNotCountedTwice" classname="in.moneytrack.core.DomainTest" time="0.002"/>
+  <testcase name="duplicateExclusionRetainsEvidence" classname="in.moneytrack.core.DomainTest" time="0.0"/>
+  <testcase name="balanceDoesNotDoubleCountReversalCredit" classname="in.moneytrack.core.DomainTest" time="0.002"/>
+  <testcase name="assistantUsesRecords" classname="in.moneytrack.core.DomainTest" time="0.009"/>
+  <testcase name="differentAccountNotMerged" classname="in.moneytrack.core.DomainTest" time="0.003"/>
+  <testcase name="unsupportedFraction" classname="in.moneytrack.core.DomainTest" time="0.005"/>
+  <testcase name="partialRefundReducesSpendingNotIncome" classname="in.moneytrack.core.DomainTest" time="0.0"/>
+  <testcase name="delayedPendingDoesNotDowngrade" classname="in.moneytrack.core.DomainTest" time="0.0"/>
+  <testcase name="failedAndPendingExcluded" classname="in.moneytrack.core.DomainTest" time="0.002"/>
+  <testcase name="transferKeepsBothSides" classname="in.moneytrack.core.DomainTest" time="0.001"/>
+  <testcase name="rejectPromotionsOtpAndRequests" classname="in.moneytrack.core.DomainTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

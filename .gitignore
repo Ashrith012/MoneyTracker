@@ -1,0 +1,11 @@
+**/build/
+.gradle/
+local.properties
+.env
+node_modules/
+*.jks
+app/google-services.json
+
+.kotlin/
+artifacts/
+*.apk
