@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -218,7 +220,7 @@ class MainActivity:FragmentActivity() {
  }
 }
 @Composable fun Onboarding(vm:MainViewModel,busy:Boolean,message:String) {
- var phone by remember {mutableStateOf("+91")};var code by remember {mutableStateOf("")};var accepted by remember {mutableStateOf(false)}
+ var phone by remember {mutableStateOf("")};var code by remember {mutableStateOf("")};var accepted by remember {mutableStateOf(false)}
  Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(28.dp),verticalArrangement=Arrangement.spacedBy(18.dp)) {
   Spacer(Modifier.height(28.dp));Text("MONEYTRACK",color=MaterialTheme.colorScheme.primary,style=MaterialTheme.typography.labelLarge)
   Text("A clearer view of\nyour money.",style=MaterialTheme.typography.displaySmall)
@@ -226,14 +228,28 @@ class MainActivity:FragmentActivity() {
   Panel("Know what you connect") {
    Text("• Gmail access is read-only and optional. Parsing happens on-device.\n• Email alerts can be delayed or missing. Coverage is not universal.\n• Financial records are encrypted locally; phone sign-in and consent metadata use the server.\n• Disconnect Gmail and delete local data separately in Settings.\n• No payments, UPI PINs or bank passwords.")
   }
-  Text("Phone verification signs you into this app. It does not discover or connect bank accounts.")
-  Toggle("I understand and accept this data use",accepted){accepted=it}
-  OutlinedTextField(phone,{phone=it},label={Text("Mobile number (+91)")},singleLine=true)
-  Button(onClick={vm.sendOtp(phone)},enabled=accepted&&!busy&&AppConfig.apiUrl.isNotBlank()) {Text("Send OTP")}
-  OutlinedTextField(code,{code=it},label={Text("SMS verification code")},singleLine=true)
-  Button(onClick={vm.verify(phone,code)},enabled=accepted&&!busy&&code.length==6&&AppConfig.apiUrl.isNotBlank()) {Text("Verify & continue")}
-  if(AppConfig.apiUrl.isBlank())Text("Live phone authentication is not configured in this build.")
-  OutlinedButton(onClick={vm.demo()},enabled=!busy) {Text("Explore synthetic demo")}
+  val liveSignIn=AppConfig.apiUrl.startsWith("https://")
+  if(liveSignIn) {
+   Text("Phone verification signs you into this app. It does not discover or connect bank accounts.")
+   Toggle("I understand and accept this data use",accepted){accepted=it}
+   OutlinedTextField(phone,{phone=it},label={Text("Indian mobile number")},supportingText={Text("Enter 10 digits; +91 is optional.")},singleLine=true,keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.Phone))
+   Button(onClick={
+    if(!accepted)vm.message.value="Accept the data-use explanation before requesting an OTP."
+    else vm.sendOtp(phone)
+   },enabled=!busy) {Text(if(busy)"Please wait…" else "Send OTP")}
+   OutlinedTextField(code,{code=it.filter(Char::isDigit).take(6)},label={Text("6-digit SMS verification code")},singleLine=true,keyboardOptions=KeyboardOptions(keyboardType=KeyboardType.NumberPassword))
+   Button(onClick={
+    if(!accepted)vm.message.value="Accept the data-use explanation before signing in."
+    else vm.verify(phone,code)
+   },enabled=!busy) {Text("Verify & continue")}
+   OutlinedButton(onClick={vm.demo()},enabled=!busy) {Text("Explore synthetic demo")}
+  } else {
+   Panel("Demo build · SMS sign-in unavailable") {
+    Text("This version is not connected to a phone sign-in service, so it cannot send or verify SMS codes. You do not need to enter a phone number to try the app.")
+    Text("You can explore the app with synthetic sample transactions. No bank account is connected.")
+    Button(onClick={vm.demo()},enabled=!busy) {Text("Explore synthetic demo")}
+   }
+  }
   Text("Demo uses a separate local database and no OTP. It is not a bank connection.",style=MaterialTheme.typography.bodySmall)
   if(message.isNotBlank())Text(message)
  }

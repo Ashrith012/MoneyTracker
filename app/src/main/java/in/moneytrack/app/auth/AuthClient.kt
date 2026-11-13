@@ -1,5 +1,6 @@
 package `in`.moneytrack.app.auth
 import `in`.moneytrack.app.AppConfig
+import `in`.moneytrack.core.PhoneInput
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.*
@@ -21,7 +22,14 @@ class AuthClient {
    json
   }
  }
- suspend fun send(phone:String) {require(Regex("\\+91[6-9][0-9]{9}").matches(phone));call("/api/auth/phone-number/send-otp",JSONObject().put("phoneNumber",phone))}
- suspend fun verify(phone:String,code:String)=call("/api/auth/phone-number/verify",JSONObject().put("phoneNumber",phone).put("code",code))
+ suspend fun send(phone:String) {
+  val normalized=PhoneInput.normalize(phone)
+  call("/api/auth/phone-number/send-otp",JSONObject().put("phoneNumber",normalized))
+ }
+ suspend fun verify(phone:String,code:String):JSONObject {
+  val normalized=PhoneInput.normalize(phone)
+  require(Regex("[0-9]{6}").matches(code)) { "Enter the 6-digit verification code from your SMS." }
+  return call("/api/auth/phone-number/verify",JSONObject().put("phoneNumber",normalized).put("code",code))
+ }
  suspend fun consent(token:String,kind:String,granted:Boolean)=call("/api/consents",JSONObject().put("kind",kind).put("granted",granted).put("version","1"),token)
 }
