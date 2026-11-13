@@ -35,7 +35,7 @@ This project uses **Supabase PostgreSQL**, not Supabase Auth. Better Auth owns p
 4. With the environment loaded, use the Better Auth CLI matching the installed release to migrate the exported config: `npx auth migrate --config ./src/auth.ts`. Review its SQL before applying it to a shared database.
 5. Apply `server/migrations/001_consents.sql` after the Better Auth migration. This table has RLS enabled with no public client grants. Disable public Data API exposure/grants on Better Auth's authentication tables as well; only the backend role should access them.
 6. Start with `node --env-file=.env dist/index.js`, behind HTTPS. `GET /health` is the health endpoint.
-7. Build Android with `./gradlew :app:assembleDebug -PapiUrl=https://YOUR_APP.fly.dev`. With no URL, live OTP buttons are disabled and the explicitly separated demo remains available.
+7. Build Android with `./gradlew :app:assembleDebug -PapiUrl=https://YOUR_APP.fly.dev`. With no HTTPS URL, the app shows a clear demo-only notice and hides unavailable OTP controls. The separate synthetic demo remains available.
 
 The backend rejects non-HTTPS base URLs and short secrets. Generate a unique random secret of at least 32 characters. Better Auth limits attempts and expiry; the database-backed auth rate limit survives server restarts. The outer Express limiter is per instance. Configure edge-level SMS abuse protection and monitor delivery failures before public deployment.
 
