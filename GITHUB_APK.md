@@ -18,3 +18,7 @@ The downloaded artifact is a ZIP containing the APK and SHA-256 checksum. Debug 
 ## Current delivery status
 
 The repository includes the complete source and `.github/workflows/build-apk.yml`. Open Actions → Build Android APK to build it. A successful run provides the downloadable APK artifact.
+
+## Successful build
+
+The APK has been built successfully on GitHub. See [the verified build and download links](GITHUB_BUILD_RESULTS.md).

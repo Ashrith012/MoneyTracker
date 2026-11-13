@@ -26,7 +26,7 @@ The backend suite checks Indian mobile normalization, payload delivery to an inj
 
 - **Device runtime and instrumented tests:** no usable emulator/device session; ADB startup failed because the Windows sandbox could not create its Android configuration directory. The three instrumented tests compile and cover encrypted database/user isolation, notification-key deduplication, interrupted import replay, and authorization revocation. The included CI config can run them on an API 35 emulator.
 - **Live integrations:** Google OAuth, Gmail service calls, real OTP delivery, Supabase migrations, consent writes and account deletion require the operator's configured services. No successful live integration is claimed.
-- **Deployment:** Fly.io, Cloudflare Pages/DNS and GitHub Actions have configuration files, but were not deployed or run remotely.
+- **Deployment:** Fly.io and Cloudflare Pages/DNS were not deployed. GitHub Actions was not run during this initial local validation; a later successful cloud APK build is documented in GITHUB_BUILD_RESULTS.md.
 - **Visual device/browser QA and release signing:** not performed. This is a debug source preview, not a production certification.
 
 ## Remaining lint warnings
